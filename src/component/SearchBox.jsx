@@ -7,8 +7,8 @@ import.meta.env;
 function SearchBox() {
   let [city, setCity] = useState("");
 
-  const API_URL = VITE_API_URL;
-  const API_KEY = VITE_API_KEY;
+const API_URL = import.meta.env.VITE_API_URL;
+const API_KEY = import.meta.env.VITE_API_KEY;
 
   let getWeatherInfo = async () => {
     let response = await fetch(
@@ -17,6 +17,7 @@ function SearchBox() {
     let jsonResponse = await response.json();
 
     let result = {
+      city: city,
       temperature: jsonResponse.main.temp,
       temperatureMin: jsonResponse.main.temp_min,
       temperatureMax: jsonResponse.main.temp_max,
