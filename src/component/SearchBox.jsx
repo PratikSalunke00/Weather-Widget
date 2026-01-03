@@ -4,45 +4,54 @@ import "./SearchBox.css";
 import { use, useState } from "react";
 import.meta.env;
 
-function SearchBox() {
+function SearchBox({ updateWeatherData }) {
   let [city, setCity] = useState("");
-
-const API_URL = import.meta.env.VITE_API_URL;
-const API_KEY = import.meta.env.VITE_API_KEY;
+  let [error, setError] = useState(false);
+  const API_URL = import.meta.env.VITE_API_URL;
+  const API_KEY = import.meta.env.VITE_API_KEY;
 
   let getWeatherInfo = async () => {
-    let response = await fetch(
-      `${API_URL}?q=${city}&appid=${API_KEY}&units=metric`
-    );
-    let jsonResponse = await response.json();
+    try {
+      let response = await fetch(
+        `${API_URL}?q=${city}&appid=${API_KEY}&units=metric`
+      );
+      let jsonResponse = await response.json();
 
-    let result = {
-      city: city,
-      temperature: jsonResponse.main.temp,
-      temperatureMin: jsonResponse.main.temp_min,
-      temperatureMax: jsonResponse.main.temp_max,
-      humidity: jsonResponse.main.humidity,
-      feelslike: jsonResponse.main.feels_like,
-      windSpeed: jsonResponse.wind.speed,
-      description: jsonResponse.weather[0].description,
-    };
-    console.log(result);
+      let result = {
+        city: city,
+        temperature: jsonResponse.main.temp,
+        temperatureMin: jsonResponse.main.temp_min,
+        temperatureMax: jsonResponse.main.temp_max,
+        humidity: jsonResponse.main.humidity,
+        feelslike: jsonResponse.main.feels_like,
+        windSpeed: jsonResponse.wind.speed,
+        description: jsonResponse.weather[0].description,
+      };
+      console.log(result);
+      return result;
+    } catch (err) {
+      throw err;
+    }
   };
 
   let handleChange = (event) => {
     setCity(event.target.value);
   };
 
-  let handleSubmit = (event) => {
-    event.preventDefault();
-    console.log("Searching for city:", city);
-    setCity("");
-    getWeatherInfo();
+  let handleSubmit = async (event) => {
+    try {
+      event.preventDefault();
+      console.log("Searching for city:", city);
+      setCity("");
+      let newData = await getWeatherInfo();
+      updateWeatherData(newData);
+    } catch (err) {
+      setError(true);
+    }
   };
 
   return (
     <div className="SearchBox">
-      <h3>Search for a Weather Location</h3>
       <form onSubmit={handleSubmit}>
         <TextField
           id="city"
@@ -54,10 +63,11 @@ const API_KEY = import.meta.env.VITE_API_KEY;
         />
       </form>
 
-      <br />
-      <Button variant="contained" type="submit">
+      <Button variant="contained" type="submit" onClick={handleSubmit}>
         Search
       </Button>
+
+      {error && <p style={{ color: "red" }}>Error to fetching data. Please try again.</p>}
     </div>
   );
 }
