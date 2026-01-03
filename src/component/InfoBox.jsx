@@ -28,7 +28,7 @@ function InfoBox({ info }) {
                 ? API_COLD_URL
                 : API_INIT_URL
             }
-            title="green iguna"
+            title="green iguna" 
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
