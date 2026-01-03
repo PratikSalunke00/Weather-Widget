@@ -7,10 +7,11 @@ import "./InfoBox.css";
 import { AcUnit, Thunderstorm, WbSunny } from "@mui/icons-material";
 
 function InfoBox({ info }) {
-  const API_INIT_URL = import.meta.env.VITE_INIT_URL;
-  const API_HOT_URL = import.meta.env.VITE_HOT_URL;
-  const API_COLD_URL = import.meta.env.VITE_COLD_URL;
-  const API_RAINY_URL = import.meta.env.VITE_RAINY_URL;
+  const API_INIT_URL = "https://images.unsplash.com/photo-1733164847768-694d4bd1ecf7?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8ZHVzdHklMjB3ZWF0aGVyfGVufDB8fDB8fHww";
+  const API_HOT_URL = "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&auto=format&fit=crop";
+  const API_COLD_URL = "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y29sZHxlbnwwfHwwfHx8";
+  const API_RAINY_URL = "https://images.unsplash.com/photo-1519692933481-e162a57d6721?w=1200&auto=format&fit=crop";
+
   return (
     <div className="InfoBox">
       <div className="cardContainer">
